@@ -7,16 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
    <!-- <script src="scripts/getmedia.js"></script>-->
-     <script src="scripts/fnLibrary.js"></script>   
+     <script src="scripts/fnLibrary.js"></script>
+     <script type="text/javascript" src="scripts/fileLIB.js"></script>   
 </head>
 <body>
 
-    <h1>Using getUserMedia with HTML5 &lt;video&gt; and &lt;canvas&gt;</h1> <div id="Timer"></div>
-     
-    <video id='video'></video>  
+    <h1>Using getUserMedia with HTML5 &lt;video&gt; and &lt;canvas&gt;</h1> 
+    <div id="Timer"></div>
+    
+    <div class="camera">
+        <video id="video">Video stream not available.</video>
+        <button id="startbutton">Take photo</button>
+  </div>
+   <canvas id="canvas"></canvas>
+  <div class="output">
+    <img id="photo" alt="The screen capture will appear in this box."> </img>
+  </div>
+  <!--  
     <canvas id='canvas'></canvas>
     <photo id='photo'></photo>
-    <button id="btncapture">Still Capture</button>
+    -->
 
     
 </body>
