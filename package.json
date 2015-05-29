@@ -4,11 +4,11 @@
   "description": "JavaScript Binding for HP Sprout",
   "main": "index.html",
   "window": {
-    "frame": false,
-    "width": 1920,
-    "height": 1080,
-    "fullscreen": true,
-    "toolbar": false,
-    "resizable": false
+    "frame": true,
+    "width": 1024,
+    "height": 768,
+    "fullscreen": false,
+    "toolbar": true,
+    "resizable": true
   }
 }
