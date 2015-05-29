@@ -12,17 +12,37 @@
 </head>
 <body>
 
-    <h1>Using getUserMedia with HTML5 &lt;video&gt; and &lt;canvas&gt;</h1> 
+    <h1>ArtistSCM using HTML5 and HP Sprout overhead Camera</h1> 
     <div id="Timer"></div>
     
     <div class="camera">
         <video id="video">Video stream not available.</video>
         <button id="startbutton">Take photo</button>
   </div>
+<table>
+<tr><td>
    <canvas id="canvas"></canvas>
-  <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box."> </img>
-  </div>
+    </td>
+    <td>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box."> </img>
+        </div>
+    </td>
+</tr>
+<tr><td>
+    <div class="merged">
+        <img id="mphoto" alt="The screen capture will appear in this box."> </img>
+    </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <button id="saveImage" onClick="saveFile()">SavePicture</button>
+</td>
+</tr>
+  </table>
+
+  
   <!--  
     <canvas id='canvas'></canvas>
     <photo id='photo'></photo>

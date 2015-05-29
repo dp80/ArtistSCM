@@ -1,21 +1,42 @@
-window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem; 
-window.directoryEntry = window.directoryEntry || window.webkitDirectoryEntry;
+window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+
+window.requestFileSystem(window.PERSISTENT, 1024*1024*1024, saveFile, errorHandler);
 
 function saveFile(fs){
-	window.requestFileSystem(window.PERSISTENT, 1024*1024*1024, initFS,errorHandler)
-
-	fs.root.getDirectory('Documents', {create: true}, function(directoryEntry) {
+	console.log('Opened file system: ' + fs.name );
+	fs.root.getDirectory('ArtistSCM', {create: true}, function(directoryEntry) {
   		alert('You have just created the ' + dirEntry.name + ' directory.');
 	}, errorHandler);
 
 }
 
-function initFS(fs){
-  alert("Welcome to Filesystem! It's showtime :)"); // Just to check if everything is OK :)
-  // place the functions you will learn bellow here
-}
 
-function errorHandler(){
-  console.log('An error occured');
+
+
+function errorHandler(e) {
+  var msg = '';
+
+  switch (e.code) {
+    case FileError.QUOTA_EXCEEDED_ERR:
+      msg = 'QUOTA_EXCEEDED_ERR';
+      break;
+    case FileError.NOT_FOUND_ERR:
+      msg = 'NOT_FOUND_ERR';
+      break;
+    case FileError.SECURITY_ERR:
+      msg = 'SECURITY_ERR';
+      break;
+    case FileError.INVALID_MODIFICATION_ERR:
+      msg = 'INVALID_MODIFICATION_ERR';
+      break;
+    case FileError.INVALID_STATE_ERR:
+      msg = 'INVALID_STATE_ERR';
+      break;
+    default:
+      msg = 'Unknown Error';
+      break;
+  };
+
+  console.log('Error: ' + msg);
 }
 
