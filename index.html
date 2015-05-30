@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/style.css">
    <!-- <script src="scripts/getmedia.js"></script>-->
    <script src="scripts/fnLibrary.js"></script>
-   <script src="scripts/fileLIB.js.js"></script>
 </head>
 <body>
     <div class="container-fluid">
@@ -22,20 +21,16 @@
           <div id="slider"></div>
           <span class="pull-left">0:00</span>
           <span class="pull-right">
-            <button class="btn btn-danger btn-live">
+            <button class="btn btn-default btn-live first-time">
               <span class="fui-video"></span>
-              <span class="label-live">Live</span>
+              <span class="label-live">Paused</span>
             </button>
           </span>
         </div>
-        <button class="btn btn-danger" id="startbutton">START</button>
       </div>
     </div>
-    <div class="camera" style="visibility: hidden" >
-        <video id="video">Video stream not available.</video>
-    </div>
-     <canvas id="canvas" style="visibility: hidden"></canvas>
-     <div class="output" style="visibility: hidden">
+     <canvas id="canvas" style="display: none"></canvas>
+     <div class="output" style="display: none">
         <img id="photo"></img>
       </div>
     <script src="scripts/jquery.min.js"></script>
@@ -43,16 +38,16 @@
     <script src="scripts/slider.js"></script>
     <script src="scripts/toggleLive.js"></script>
     <script>
-    var flipImage = function(imageID) {
-      var exec = require('child_process').exec;
+    // var flipImage = function(imageID) {
+    //   var exec = require('child_process').exec;
 
-      exec('convert images/raw/' + imageID + '.png -flop images/flip/' + imageID + '.png', {
-        cwd: process.cwd()
-      }, function (error, stdout, stderr) {
-        // output is in stdout
-        $( ".container-fluid" ).append( "<p>" + error + "</p>" );
-      });
-    }
+    //   exec('convert images/raw/' + imageID + '.png -flop images/flip/' + imageID + '.png', {
+    //     cwd: process.cwd()
+    //   }, function (error, stdout, stderr) {
+    //     // output is in stdout
+    //     $( ".container-fluid" ).append( "<p>" + error + "</p>" );
+    //   });
+    // }
     
     </script>
 </body>

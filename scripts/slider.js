@@ -1,17 +1,22 @@
 var $slider = $("#slider");
 var sliderConfig = {
   'min': 1,
-  'max': 1,
+  'max': 2,
   'value': 1
 };
 
 var sliderChangedFn = function(event, ui) {
-  console.log(ui.value);
+  console.log("sliderChangedFn");
+  //Abort live
+  if($('.btn-live').hasClass('btn-danger first-time')) {
+    $('.btn-live').trigger('click');
+    $('.btn-live').removeClass('first-time');
+  }
+
   var max = $(this).slider("option", "max");
 
   if(ui.value === max) {
-    $('#video').removeClass('hide');
-    $('.img-container').addClass('hide');
+    showVideo();
   } else {
     $('#video').addClass('hide');
     $('.img-container').removeClass('hide');
@@ -19,8 +24,14 @@ var sliderChangedFn = function(event, ui) {
   }
 };
 
-var changeSliderMaxFn = function(newMax, setValueToMax) {
-  var setValue = setValueToMax;
+var showVideo = function() {
+  $('#video').removeClass('hide');
+  $('.img-container').addClass('hide');
+}
+
+var changeSliderMaxFn = function(newMax, updateValueToMax) {
+  console.log("changeSliderMaxFn");
+  var setValue = updateValueToMax;
 
   $slider.slider( "option", "max", newMax );
 

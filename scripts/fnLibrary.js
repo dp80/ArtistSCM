@@ -19,12 +19,39 @@
   var photo = null;
   var startbutton = null;
 
+  var isLive = false;
+  var recordInterval;
+  var timeoutInterval = 500;
+
+  var toggleLive = function() {
+    var btnLive = $(this);
+    var labelLive = $('.label-live');
+
+    if(btnLive.hasClass('btn-danger')) {
+      isLive = false;
+      btnLive.removeClass('btn-danger').addClass('btn-default');
+      labelLive.text('Paused');
+    } else {
+      isLive = true;
+      btnLive.removeClass('btn-default').addClass('btn-danger');
+      labelLive.text('Live');
+    }
+
+    if(isLive) {
+      showVideo();  
+      recordInterval = setInterval(function(){takepicture();},timeoutInterval);
+    } else {
+      clearInterval(recordInterval);
+    }
+  }
+
   function startup() {
+    $(".btn-live").click(toggleLive);
+
     console.log("Starting startup in fnLibrary.js");
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
-    startbutton = document.getElementById('startbutton');
 
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -71,7 +98,7 @@
 
     startbutton.addEventListener('click', function(ev){
       console.log("Starting takepicture");
-      deletedir();
+      deletefile();
       createdir();
       setInterval(function(){takepicture();},500);
       // takepicture();
@@ -123,12 +150,6 @@
   window.addEventListener('load', startup, false);
 })();
 
-var myVar=setInterval(function () {myTimer()}, 1000);
-
-function myTimer() {
-    var d = new Date();
-    document.getElementById("Timer").innerHTML = d.toLocaleTimeString();
-}
 //set the picture number value here:
 var numPictureCounter = 1;
 function savePicture(blbcontent){
@@ -142,7 +163,7 @@ function savePicture(blbcontent){
             console.log(err);
         }
     });
-    changeSliderMaxFn(numPictureCounter, true);
+    changeSliderMaxFn(numPictureCounter);
     numPictureCounter = numPictureCounter + 1 ;
   }
 
@@ -158,7 +179,7 @@ function createdir(){
     });
 }
 
-function deletedir(){
+function deletefile(){
   console.log("in deleteFiles : deleting")
   var fs = require('fs');
   var currentDir = process.cwd();
