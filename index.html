@@ -3,7 +3,7 @@
 <html lang='en'>
 <head>
     <meta charset='utf-8'>
-    <title>Artist SCM</title>
+    <title>Artist Timeline</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/flat-ui.css">
@@ -79,12 +79,15 @@
     <div class="container-fluid">
       <div class="col-md-6 col-md-offset-3 display">
         <h2>Artist Timeline</h2>
-        <img class="img-display img-rounded img-responsive" src="images/download.png" alt="placeholder">
+        <img class="img-container img-display img-rounded img-responsive" src="images/download.png" alt="placeholder">
         <div class="control-bar">
           <div id="slider"></div>
           <span class="pull-left">0:00</span>
           <span class="pull-right">
-            <button class="btn btn-danger btn-live"><span class="fui-video"></span>Live</button>
+            <button class="btn btn-danger btn-live">
+              <span class="fui-video"></span>
+              <span class="label-live">Live</span>
+            </button>
           </span>
 
         </div>
@@ -93,33 +96,75 @@
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/flat-ui.min.js"></script>
     <script>
-    $.fn.addSliderSegments = function (amount, orientation) {
-  return this.each(function () {
-    if (orientation == "vertical") {
-      var output = ''
-        , i;
-      for (i = 1; i <= amount - 2; i++) {
-        output += '<div class="ui-slider-segment" style="top:' + 100 / (amount - 1) * i + '%;"></div>';
-      };
-      $(this).prepend(output);
-    } else {
-      var segmentGap = 100 / (amount - 1) + "%"
-        , segment = '<div class="ui-slider-segment" style="margin-left: ' + segmentGap + ';"></div>';
-      $(this).prepend(segment.repeat(amount - 2));
+    var toggleLive = function() {
+      var btnLive = $(this);
+      var labelLive = $('.label-live');
+
+      if(btnLive.hasClass('btn-danger')) {
+        btnLive.removeClass('btn-danger').addClass('btn-default');
+        labelLive.text('Paused');
+      } else {
+        btnLive.removeClass('btn-default').addClass('btn-danger');
+        labelLive.text('Live');
+      }
     }
-  });
-};
+
+    $(".btn-live").click(toggleLive);
+    </script>
+    <script>
+    $.fn.addSliderSegments = function (amount, orientation) {
+      return this.each(function () {
+        if (orientation == "vertical") {
+          var output = ''
+            , i;
+          for (i = 1; i <= amount - 2; i++) {
+            output += '<div class="ui-slider-segment" style="top:' + 100 / (amount - 1) * i + '%;"></div>';
+          };
+          $(this).prepend(output);
+        } else {
+          var segmentGap = 100 / (amount - 1) + "%"
+            , segment = '<div class="ui-slider-segment" style="margin-left: ' + segmentGap + ';"></div>';
+          $(this).prepend(segment.repeat(amount - 2));
+        }
+      });
+    };
 
     var $slider = $("#slider");
-if ($slider.length > 0) {
-  $slider.slider({
-    min: 1,
-    max: 5,
-    value: 5,
-    orientation: "horizontal",
-    range: "min"
-  }).addSliderSegments($slider.slider("option").max);
-}
-</script>
+    var sliderConfig = {
+      'min': 1,
+      'max': 5,
+      'value': 5
+    };
+    
+    var sliderChangedFn = function(event, ui) {
+      console.log(ui.value);
+      $('.img-container').css( "opacity", Math.random() );
+    };
+
+    var changeSliderMaxFn = function(newMax, setValueToMax) {
+      var setValue = setValueToMax;
+
+      $slider.slider( "option", "max", newMax );
+
+      if(setValue != false) {
+        $slider.slider("value", newMax);
+      }
+    }
+
+
+    if ($slider.length > 0) {
+      $slider.slider({
+        min: sliderConfig.min,
+        max: sliderConfig.max,
+        value: sliderConfig.value,
+        orientation: "horizontal",
+        range: "min",
+        slide: sliderChangedFn
+      }).addSliderSegments($slider.slider("option").max);
+
+
+      changeSliderMaxFn(100);
+    }
+    </script>
 </body>
 </html>
