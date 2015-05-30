@@ -1,8 +1,8 @@
 var $slider = $("#slider");
 var sliderConfig = {
   'min': 1,
-  'max': 5,
-  'value': 5
+  'max': 1,
+  'value': 1
 };
 
 var sliderChangedFn = function(event, ui) {
@@ -15,7 +15,7 @@ var sliderChangedFn = function(event, ui) {
   } else {
     $('#video').addClass('hide');
     $('.img-container').removeClass('hide');
-    $('.img-container').attr( "src", 'images/display/' + ui.value + '.png' );
+    $('.img-container').attr( "src", 'images/raw/' + ui.value + '.png' );
   }
 };
 

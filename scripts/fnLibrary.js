@@ -71,8 +71,10 @@
 
     startbutton.addEventListener('click', function(ev){
       console.log("Starting takepicture");
-      takepicture();
+      setInterval(function(){takepicture();},500);
+      // takepicture();
       ev.preventDefault();
+
     }, false);
     
     clearphoto();
