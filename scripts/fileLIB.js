@@ -6,9 +6,8 @@ navigator.webkitPersistentStorage.requestQuota (1024*1024*1024, function(granted
 }, errorHandler);
 
 function requestFS(grantedBytes) {
-  window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
-    console.log ('fs: ', arguments); // I see this on Chrome 27 in Ubuntu
-  }, errorHandler);
+	  console.log("In requestFS : " + grantedBytes );
+  window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, onInitFs, errorHandler);
 }
 
 }
@@ -16,6 +15,7 @@ function requestFS(grantedBytes) {
 
 
 function errorHandler(e) {
+	console.log('In errorHandler...oops')
   var msg = '';
 
   switch (e.code) {
@@ -43,23 +43,26 @@ function errorHandler(e) {
 }
 
 function onInitFs(fs) {
-
+	console.log("Starting onInitFs");
   fs.root.getFile('c:\\Temp\\logFile.txt', {create: true}, function(fileEntry) {
 
-    fileEntry.createWriter(function(writer) {  // FileWriter
-
-        writer.onwrite = function(e) {
+    fileEntry.createWriter(function(fileWriter) {  // FileWriter
+    	console.log('CreateWriter: ' + fileWriter)
+        fileWriter.onwrite = function(e) {
           console.log('Write completed.');
         };
 
-        writer.onerror = function(e) {
+        fileWriter.onerror = function(e) {
           console.log('Write failed: ' + e);
         };
+        console.log(fileWriter);
+        //var aFileParts = 'asom,asdfia dasfawein afae';
+        var bb = new Blob(['lol'], {type : 'text/plain'});  // the blob
 
-        var bb = new BlobBuilder();
-        bb.append('Lorem ipsum');
-        writer.write(bb.getBlob('text/plain'));
-
+        fileWriter.write(bb);
+        console.log(fileEntry.isFile + ' / ' + fileEntry.toURL());
+        //ar generatedFile = new File(["Rough Draft ...."], 'c:\Temp\logFile.txt', {type: "text/plain"; lastModified: "4/5/1900"});
+        //saveAs(bb, 'something.txt');
     }, errorHandler);
   });
 }
