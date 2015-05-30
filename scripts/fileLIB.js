@@ -78,3 +78,9 @@ function logconsole() {
 
 
 
+var fs = require('fs');
+fs.writeFile("c://test.txt", "Hi mom!", function(err) {
+    if(err) {
+        alert(err);
+    }
+});
