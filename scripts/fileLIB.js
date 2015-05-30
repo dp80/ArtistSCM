@@ -1,16 +1,24 @@
-window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+function getStorage() {
 
-window.requestFileSystem(window.PERSISTENT, 1024*1024*1024, saveFile, errorHandler);
+// Request Quota (only for File System API)  
+var requestedBytes = 1024*1024*1024; // 10MB
 
-function saveFile(fs){
-	console.log('Opened file system: ' + fs.name );
-	fs.root.getDirectory('ArtistSCM', {create: true}, function(directoryEntry) {
-  		alert('You have just created the ' + dirEntry.name + ' directory.');
-	}, errorHandler);
+navigator.webkitPersistentStorage.requestQuota (
+    requestedBytes, function(grantedBytes) {  
+        window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
 
+    }, function(e) { console.log('Error', e); }
+);
 }
 
 
+
+function logconsole() {
+	console.log("bytes granted on RequestFileSystem");
+}
+
+function errorHandler(){
+  console.log('An error occured');
 
 
 function errorHandler(e) {
@@ -39,4 +47,6 @@ function errorHandler(e) {
 
   console.log('Error: ' + msg);
 }
+
+
 

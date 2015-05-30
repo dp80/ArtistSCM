@@ -119,3 +119,4 @@ function myTimer() {
     var d = new Date();
     document.getElementById("Timer").innerHTML = d.toLocaleTimeString();
 }
+
