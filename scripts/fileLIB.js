@@ -1,24 +1,3 @@
-function getStorage() {
-
-// Request Quota (only for File System API)  
-var requestedBytes = 1024*1024*1024; // 10MB
-
-navigator.webkitPersistentStorage.requestQuota (
-    requestedBytes, function(grantedBytes) {  
-        window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
-
-    }, function(e) { console.log('Error', e); }
-);
-}
-
-
-
-function logconsole() {
-	console.log("bytes granted on RequestFileSystem");
-}
-
-function errorHandler(){
-  console.log('An error occured');
 
 
 function errorHandler(e) {
@@ -47,6 +26,48 @@ function errorHandler(e) {
 
   console.log('Error: ' + msg);
 }
+
+function onInitFs(fs) {
+
+  fs.root.getFile('c:\\Temp\\logFile.txt', {create: true}, function(fileEntry) {
+
+    fileEntry.createWriter(function(writer) {  // FileWriter
+
+        writer.onwrite = function(e) {
+          console.log('Write completed.');
+        };
+
+        writer.onerror = function(e) {
+          console.log('Write failed: ' + e);
+        };
+
+        var bb = new BlobBuilder();
+        bb.append('Lorem ipsum');
+        writer.write(bb.getBlob('text/plain'));
+
+    }, errorHandler);
+  });
+}
+
+function getStorage() {
+
+// Request Quota (only for File System API)  
+var requestedBytes = 1024*1024*1024; // 10MB
+
+navigator.webkitPersistentStorage.requestQuota ( requestedBytes, 
+	function(grantedBytes) {  
+        window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler); 
+    }, 
+    errorHandler);
+}
+
+
+
+function logconsole() {
+	console.log("bytes granted on RequestFileSystem");
+}
+
+
 
 
 
