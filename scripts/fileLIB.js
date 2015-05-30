@@ -1,24 +1,18 @@
+
 function getStorage() {
+navigator.webkitPersistentStorage.requestQuota (1024*1024*1024, function(grantedBytes) {
+  console.log ('requestQuota: ', arguments);
+  requestFS(grantedBytes);
+}, errorHandler);
 
-// Request Quota (only for File System API)  
-var requestedBytes = 1024*1024*1024; // 10MB
-
-navigator.webkitPersistentStorage.requestQuota (
-    requestedBytes, function(grantedBytes) {  
-        window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
-
-    }, function(e) { console.log('Error', e); }
-);
+function requestFS(grantedBytes) {
+  window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
+    console.log ('fs: ', arguments); // I see this on Chrome 27 in Ubuntu
+  }, errorHandler);
 }
 
-
-
-function logconsole() {
-	console.log("bytes granted on RequestFileSystem");
 }
 
-function errorHandler(){
-  console.log('An error occured');
 
 
 function errorHandler(e) {
@@ -47,6 +41,37 @@ function errorHandler(e) {
 
   console.log('Error: ' + msg);
 }
+
+function onInitFs(fs) {
+
+  fs.root.getFile('c:\\Temp\\logFile.txt', {create: true}, function(fileEntry) {
+
+    fileEntry.createWriter(function(writer) {  // FileWriter
+
+        writer.onwrite = function(e) {
+          console.log('Write completed.');
+        };
+
+        writer.onerror = function(e) {
+          console.log('Write failed: ' + e);
+        };
+
+        var bb = new BlobBuilder();
+        bb.append('Lorem ipsum');
+        writer.write(bb.getBlob('text/plain'));
+
+    }, errorHandler);
+  });
+}
+
+
+
+
+function logconsole() {
+	console.log("bytes granted on RequestFileSystem");
+}
+
+
 
 
 
