@@ -65,10 +65,10 @@
 
       .btn-live {
         padding-left: 3px;
-    padding-right: 3px;
-    padding-bottom: 2px;
-    padding-top: 2px;
-    font-size: 13px;
+        padding-right: 3px;
+        padding-bottom: 2px;
+        padding-top: 2px;
+        font-size: 13px;
       }
 
       .fui-video {
@@ -88,7 +88,7 @@
     <div class="container-fluid">
       <div class="col-md-6 col-md-offset-3 display">
         <h2>Artist Timeline</h2>
-        <img class="img-container img-display img-rounded img-responsive hide" src="images/1.png" alt="placeholder">
+        <img class="img-container img-display img-rounded img-responsive hide" src="images/display/1.png" alt="placeholder">
         <video id="video">Video stream not available.</video>
         <div class="control-bar">
           <div id="slider"></div>
@@ -149,7 +149,7 @@
       } else {
         $('#video').addClass('hide');
         $('.img-container').removeClass('hide');
-        $('.img-container').attr( "src", 'images/' + ui.value + '.png' );
+        $('.img-container').attr( "src", 'images/display/' + ui.value + '.png' );
       }
     };
 
@@ -199,6 +199,19 @@
       range: "min",
       slide: sliderChangedFn
     }).addSliderSegments($slider.slider("option").max);
+
+
+    var flipImage = function(imageID) {
+      var exec = require('child_process').exec;
+
+      exec('convert images/raw/' + imageID + '.png -flop images/flip/' + imageID + '.png', {
+        cwd: process.cwd()
+      }, function (error, stdout, stderr) {
+        // output is in stdout
+        $( ".container-fluid" ).append( "<p>" + error + "</p>" );
+      });
+    }
+    
     </script>
 </body>
 </html>
