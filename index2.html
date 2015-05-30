@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Using getUserMedia with HTML5 <video> and <canvas></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+   <!-- <script src="scripts/getmedia.js"></script>-->
+     <script src="scripts/fnLibrary.js"></script>
+     <script type="text/javascript" src="scripts/fileLIB.js"></script>   
+</head>
+<body>
+
+    <h1>ArtistSCM using HTML5 and HP Sprout overhead Camera</h1> 
+    <div id="Timer"></div>
+    
+    <div class="camera">
+        <video id="video">Video stream not available.</video>
+        <button id="startbutton">Take photo</button>
+  </div>
+<table>
+<tr><td>
+   <canvas id="canvas"></canvas>
+    </td>
+    <td>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box."> </img>
+        </div>
+    </td>
+</tr>
+<tr><td>
+    <div class="merged">
+        <img id="mphoto" alt="The screen capture will appear in this box."> </img>
+    </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <button id="saveImage" onclick="initOn()" > SavePicture </button>
+</td>
+</tr>
+  </table>
+
+  
+  <!--  
+    <canvas id='canvas'></canvas>
+    <photo id='photo'></photo>
+    -->
+
+    
+</body>
+</html>

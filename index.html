@@ -2,52 +2,124 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-    <meta charset='utf-8' />
-    <title>Using getUserMedia with HTML5 <video> and <canvas></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <meta charset='utf-8'>
+    <title>Artist SCM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/flat-ui.css">
    <!-- <script src="scripts/getmedia.js"></script>-->
-     <script src="scripts/fnLibrary.js"></script>
-     <script type="text/javascript" src="scripts/fileLIB.js"></script>   
+     <style>
+      .container-fluid {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+
+      .img-display {
+        /*width: 100%;*/
+        height: auto;
+        width: 100%;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+
+      .control-bar {
+        height: 70px;
+        width: auto;
+        background-color: #34495E;
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+        padding-top: 15px;
+        padding-right: 20px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        color: white;
+        font-family: "Lato", Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        font-weight: 300;
+        line-height: normal;
+      }
+
+      html,
+      head,
+      body,
+      .container-fluid,
+      .col-md-12 {
+        height: 100%;
+      }
+
+      .display {
+        /*width: 820px;*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      #slider {
+        margin-bottom: 10px;
+      }
+
+      body {
+        background-color: #ECF0F1;
+      }
+
+      .btn-live {
+        padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    font-size: 13px;
+      }
+
+      .fui-video {
+        padding-right: 3px;
+      }
+     </style>   
 </head>
 <body>
+    <div class="container-fluid">
+      <div class="col-md-6 col-md-offset-3 display">
+        <h2>Artist SCM</h2>
+        <img class="img-display img-rounded img-responsive" src="images/download.png" alt="placeholder">
+        <div class="control-bar">
+          <div id="slider"></div>
+          <span class="pull-left">0:00</span>
+          <span class="pull-right">
+            <button class="btn btn-danger btn-live"><span class="fui-video"></span>Live</button>
+          </span>
 
-    <h1>ArtistSCM using HTML5 and HP Sprout overhead Camera</h1> 
-    <div id="Timer"></div>
-    
-    <div class="camera">
-        <video id="video">Video stream not available.</video>
-        <button id="startbutton">Take photo</button>
-  </div>
-<table>
-<tr><td>
-   <canvas id="canvas"></canvas>
-    </td>
-    <td>
-        <div class="output">
-            <img id="photo" alt="The screen capture will appear in this box."> </img>
         </div>
-    </td>
-</tr>
-<tr><td>
-    <div class="merged">
-        <img id="mphoto" alt="The screen capture will appear in this box."> </img>
+      </div>
     </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <button id="saveImage" onclick="initOn()" > SavePicture </button>
-</td>
-</tr>
-  </table>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/flat-ui.min.js"></script>
+    <script>
+    $.fn.addSliderSegments = function (amount, orientation) {
+  return this.each(function () {
+    if (orientation == "vertical") {
+      var output = ''
+        , i;
+      for (i = 1; i <= amount - 2; i++) {
+        output += '<div class="ui-slider-segment" style="top:' + 100 / (amount - 1) * i + '%;"></div>';
+      };
+      $(this).prepend(output);
+    } else {
+      var segmentGap = 100 / (amount - 1) + "%"
+        , segment = '<div class="ui-slider-segment" style="margin-left: ' + segmentGap + ';"></div>';
+      $(this).prepend(segment.repeat(amount - 2));
+    }
+  });
+};
 
-  
-  <!--  
-    <canvas id='canvas'></canvas>
-    <photo id='photo'></photo>
-    -->
-
-    
+    var $slider = $("#slider");
+if ($slider.length > 0) {
+  $slider.slider({
+    min: 1,
+    max: 5,
+    value: 5,
+    orientation: "horizontal",
+    range: "min"
+  }).addSliderSegments($slider.slider("option").max);
+}
+</script>
 </body>
 </html>
