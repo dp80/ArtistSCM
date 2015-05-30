@@ -129,7 +129,7 @@ function myTimer() {
 var numPictureCounter = 1;
 function savePicture(blbcontent){
   console.log("savePicture in :" + numPictureCounter  );
-    var name = "\\images\\" + numPictureCounter + ".png";
+    var name = "\\images\\raw\\" + numPictureCounter + ".png";
     var fs = require('fs');
     var currentDir = process.cwd();
     console.log("savePicture - CurrentDir: " + currentDir + name);
