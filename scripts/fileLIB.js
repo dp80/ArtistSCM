@@ -1,4 +1,19 @@
 
+function getStorage() {
+navigator.webkitPersistentStorage.requestQuota (1024*1024*1024, function(grantedBytes) {
+  console.log ('requestQuota: ', arguments);
+  requestFS(grantedBytes);
+}, errorHandler);
+
+function requestFS(grantedBytes) {
+  window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
+    console.log ('fs: ', arguments); // I see this on Chrome 27 in Ubuntu
+  }, errorHandler);
+}
+
+}
+
+
 
 function errorHandler(e) {
   var msg = '';
@@ -49,17 +64,6 @@ function onInitFs(fs) {
   });
 }
 
-function getStorage() {
-
-// Request Quota (only for File System API)  
-var requestedBytes = 1024*1024*1024; // 10MB
-
-navigator.webkitPersistentStorage.requestQuota ( requestedBytes, 
-	function(grantedBytes) {  
-        window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler); 
-    }, 
-    errorHandler);
-}
 
 
 
