@@ -20,6 +20,7 @@
   var startbutton = null;
 
   function startup() {
+    console.log("Starting startup in fnLibrary.js");
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
@@ -69,6 +70,7 @@
     }, false);
 
     startbutton.addEventListener('click', function(ev){
+      console.log("Starting takepicture");
       takepicture();
       ev.preventDefault();
     }, false);
@@ -95,6 +97,7 @@
   // other changes before drawing it.
 
   function takepicture() {
+    console.log("in takepicture : ");
     var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
@@ -103,6 +106,9 @@
     
       var data = canvas.toDataURL('image/png');
       photo.setAttribute('src', data);
+      data = data.replace(/^data:image\/\w+;base64,/, "");
+      var buff = new Buffer(data, 'base64');
+      savePicture(buff);
     } else {
       clearphoto();
     }
@@ -119,4 +125,20 @@ function myTimer() {
     var d = new Date();
     document.getElementById("Timer").innerHTML = d.toLocaleTimeString();
 }
+//set the picture number value here:
+var numPictureCounter = 1;
+function savePicture(blbcontent){
+  console.log("savePicture in :" + numPictureCounter  );
+    var name = "\\images\\" + numPictureCounter + ".png";
+    var fs = require('fs');
+    var currentDir = process.cwd();
+    console.log("savePicture - CurrentDir: " + currentDir + name);
+    fs.writeFile(currentDir + name, blbcontent, function(err) {
+        if(err) {
+            alert(err);
+        }
+    });
+    changeSliderMaxFn(numPictureCounter, true);
+    numPictureCounter = numPictureCounter + 1 ;
+  }
 
