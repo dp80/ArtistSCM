@@ -71,6 +71,8 @@
 
     startbutton.addEventListener('click', function(ev){
       console.log("Starting takepicture");
+      deletedir();
+      createdir();
       setInterval(function(){takepicture();},500);
       // takepicture();
       ev.preventDefault();
@@ -137,10 +139,36 @@ function savePicture(blbcontent){
     console.log("savePicture - CurrentDir: " + currentDir + name);
     fs.writeFile(currentDir + name, blbcontent, function(err) {
         if(err) {
-            alert(err);
+            console.log(err);
         }
     });
     changeSliderMaxFn(numPictureCounter, true);
     numPictureCounter = numPictureCounter + 1 ;
   }
 
+function createdir(){
+   console.log("in createFolder : createdir")
+   var fs = require('fs');
+  var currentDir = process.cwd();
+  
+  fs.mkdir(currentDir + "\\images\\raw", function(err) {
+        if(err) {
+            console.log(err);
+        }
+    });
+}
+
+function deletedir(){
+  console.log("in deleteFiles : deleting")
+  var fs = require('fs');
+  var currentDir = process.cwd();
+  var len = 5000;
+  for (var i = 0; i < len; i++){
+
+    fs.unlink(currentDir + "\\images\\raw\\" + i + ".png", function(err) {
+          if(err) {
+              console.log(err);
+          }
+      });
+  }    
+}
