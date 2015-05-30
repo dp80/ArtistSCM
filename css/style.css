@@ -50,15 +50,17 @@ body {
   background-color: #ECF0F1;
 }
 
-.btn-live {
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-bottom: 2px;
-  padding-top: 2px;
+.btn-controls {
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-bottom: 3px;
+  padding-top: 3px;
   font-size: 13px;
+  margin-left: 5px;
 }
 
-.fui-video {
+.fui-video,
+.fui-star {
   padding-right: 3px;
 }
 

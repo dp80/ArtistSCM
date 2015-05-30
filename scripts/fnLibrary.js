@@ -46,6 +46,9 @@
   }
 
   function startup() {
+    deletefile();
+    createdir();
+    
     $(".btn-live").click(toggleLive);
 
     console.log("Starting startup in fnLibrary.js");
@@ -96,16 +99,6 @@
       }
     }, false);
 
-    startbutton.addEventListener('click', function(ev){
-      console.log("Starting takepicture");
-      deletefile();
-      createdir();
-      setInterval(function(){takepicture();},500);
-      // takepicture();
-      ev.preventDefault();
-
-    }, false);
-    
     clearphoto();
   }
 
