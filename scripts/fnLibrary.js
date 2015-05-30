@@ -45,11 +45,25 @@
     }
   }
 
+  var toggleExperiment = function() {
+    var btn = $(this);
+    var label = $('.label-experiment');
+
+    if(btn.hasClass('btn-info')) {
+      btn.removeClass('btn-info').addClass('btn-default');
+      label.text('Enable Experiment');
+    } else {
+      btn.removeClass('btn-default').addClass('btn-info');
+      label.text('Experimenting!');
+    }
+  }
+
   function startup() {
     deletefile();
     createdir();
-    
+
     $(".btn-live").click(toggleLive);
+    $(".btn-experiment").click(toggleExperiment);
 
     console.log("Starting startup in fnLibrary.js");
     video = document.getElementById('video');
